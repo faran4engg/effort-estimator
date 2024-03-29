@@ -8,7 +8,7 @@ const ThemeChanger = () => {
   const { setColorScheme, colorScheme } = useMantineColorScheme();
   const isMounted = useIsMounted();
 
-  if (!isMounted) return <span>...</span>;
+  if (!isMounted) return <span style={{ marginRight: '40px' }}></span>;
 
   return (
     <Group>

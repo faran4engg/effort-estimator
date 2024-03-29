@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ChevronDown } from 'lucide-react';
+import { ClerkLoaded, ClerkLoading, UserButton, useUser } from '@clerk/nextjs';
 import {
   Box,
   Burger,
@@ -12,11 +12,10 @@ import {
   Flex,
   Group,
   Image,
-  Menu,
+  Loader,
   ScrollArea,
   Stack,
   Text,
-  UnstyledButton,
   rem,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
@@ -26,6 +25,10 @@ import classes from './UnprotectedLayoutHeader.module.css';
 const UnprotectedLayoutHeader = () => {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
     useDisclosure(false);
+
+  const { user } = useUser();
+
+  console.log(111, user);
 
   const router = useRouter();
 
@@ -41,47 +44,38 @@ const UnprotectedLayoutHeader = () => {
           </Link>
 
           <Group visibleFrom="sm">
-            <Button>Log in</Button>
+            {!user && (
+              <Button onClick={() => router.push('/sign-in')}>Signin</Button>
+            )}
 
             <ThemeChanger />
 
-            <Menu
-              width={140}
-              position="bottom-end"
-              transitionProps={{ transition: 'pop-top-right' }}
-              // onClose={() => setUserMenuOpened(false)}
-              // onOpen={() => setUserMenuOpened(true)}
-              withinPortal
-            >
-              <Menu.Target>
-                <UnstyledButton>
-                  <Group gap={7}>
-                    <Text fw={500} size="sm" lh={1} mr={3}>
-                      user name
-                    </Text>
-
-                    <ChevronDown style={{ width: rem(12), height: rem(12) }} />
-                  </Group>
-                </UnstyledButton>
-              </Menu.Target>
-              <Menu.Dropdown>
-                <Menu.Item
-                  onClick={() => {
-                    router.push('/dashboard');
-                  }}
-                >
-                  Dashboard
-                </Menu.Item>
-                <Menu.Item onClick={() => {}}>Logout</Menu.Item>
-              </Menu.Dropdown>
-            </Menu>
+            {user && (
+              <>
+                <ClerkLoading>
+                  <Loader size="sm" />
+                </ClerkLoading>
+                <ClerkLoaded>
+                  <UserButton afterSignOutUrl="/" />
+                </ClerkLoaded>
+              </>
+            )}
           </Group>
-          <Burger
-            opened={drawerOpened}
-            onClick={toggleDrawer}
-            hiddenFrom="sm"
-            size="sm"
-          />
+          <Group hiddenFrom="sm">
+            <ClerkLoading>
+              <Loader />
+            </ClerkLoading>
+            <ClerkLoaded>
+              <UserButton afterSignOutUrl="/" />
+            </ClerkLoaded>
+            <ThemeChanger />
+            <Burger
+              opened={drawerOpened}
+              onClick={toggleDrawer}
+              hiddenFrom="sm"
+              size="sm"
+            />
+          </Group>
         </Group>
       </header>
 
@@ -99,20 +93,11 @@ const UnprotectedLayoutHeader = () => {
 
           <Group>
             <Stack p="md" gap="lg" w="100%" justify="center" align="center">
-              <Link href="/login">
-                <Button variant="default">Log in</Button>
-              </Link>
-              <Button>Sign up</Button>
-            </Stack>
-
-            <Stack p="md" gap="lg" w="100%" justify="center" align="center">
-              <Text>Dashboard</Text>
-              <Text>Logout</Text>
-              <Group gap={7}>
-                <Text fw={500} size="sm" lh={1} mr={3}>
-                  user name
-                </Text>
-              </Group>
+              {!user ? (
+                <Button onClick={() => router.push('/sign-in')}>Signin</Button>
+              ) : (
+                <p>Join Room</p>
+              )}
             </Stack>
           </Group>
         </ScrollArea>

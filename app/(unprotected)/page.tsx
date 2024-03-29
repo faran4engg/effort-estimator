@@ -3,7 +3,7 @@ import { Button } from '@mantine/core';
 
 const HomePage = () => (
   <div>
-    <Button>Test Button</Button>
+    <Button>Test Button 1</Button>
   </div>
 );
 

@@ -1,11 +1,10 @@
 import { ReactNode } from 'react';
 import { Container } from '@mantine/core';
-import HomeHeader from './_components/AuthPageHeader/AuthPageHeader';
+import AuthPageHeader from './_components/AuthPageHeader/AuthPageHeader';
 
 const AuthLayout = ({ children }: { children: ReactNode }) => (
   <main>
-    <HomeHeader />
-
+    <AuthPageHeader />
     <Container size="md">{children}</Container>
   </main>
 );

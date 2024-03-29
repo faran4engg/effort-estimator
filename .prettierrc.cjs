@@ -6,6 +6,7 @@ module.exports = {
     '^next(.*)$',
     '^axios(.*)$',
     '^lucide-react(.*)$',
+    '^@clerk(.*)$',
     '^@mantine(.*)$',
     '^@tanstack(.*)$',
     '^@/components(.*)$',
@@ -23,5 +24,8 @@ module.exports = {
   ],
   importOrderSeparation: false,
   importOrderSortSpecifiers: true,
-  plugins: ['eslint-config-mantine/.prettierrc.js', '@trivago/prettier-plugin-sort-imports'],
+  plugins: [
+    'eslint-config-mantine/.prettierrc.js',
+    '@trivago/prettier-plugin-sort-imports',
+  ],
 };

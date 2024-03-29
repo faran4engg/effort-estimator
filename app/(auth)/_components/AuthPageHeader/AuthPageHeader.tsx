@@ -3,7 +3,7 @@ import { Container, Flex, Image, Text } from '@mantine/core';
 import ThemeChanger from '@/components/ThemeChanger';
 import classes from './AuthPageHeader.module.css';
 
-export function AuthPageHeader() {
+function AuthPageHeader() {
   return (
     <header className={classes.header}>
       <Container size="md" className={classes.inner}>
