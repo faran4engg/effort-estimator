@@ -14,7 +14,6 @@ import { hasLength, useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '@/firebase/firebase';
-import { LS_USER_ID_KEY } from '@/core/constants';
 import { CreateRoomFormProps, RoomInfo } from '@/core/types';
 import { getUUID } from '@/utils/getUUID';
 import { sleep } from '@/utils/sleep';
@@ -50,7 +49,7 @@ const CreateRoomForm: FC<Props> = ({ userFirstName, userImg, userId }) => {
     if (!form.isValid()) return;
 
     toggle();
-    await sleep(2000);
+    await sleep(1200);
 
     const adminUser = {
       createdAt: Date.now(),
@@ -73,7 +72,7 @@ const CreateRoomForm: FC<Props> = ({ userFirstName, userImg, userId }) => {
 
     await setDoc(doc(db, 'planning', roomId), newRoomData);
     toggle();
-    localStorage.setItem(LS_USER_ID_KEY, userId);
+    // localStorage.setItem(LS_USER_ID_KEY, userId);
     router.push(`/planning/${roomId}`);
   };
 
