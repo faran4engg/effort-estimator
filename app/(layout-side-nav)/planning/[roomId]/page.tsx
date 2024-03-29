@@ -26,7 +26,7 @@ const updateUser = async (
 
   if (isUserInDB) return;
 
-  // update room with user information - for now user array
+  // update room with user information
   const newUser: RoomUser = {
     createdAt: Date.now(),
     userId: currUser.id,
@@ -39,12 +39,36 @@ const updateUser = async (
 
   const roomUsersRef = doc(db, 'planning', roomId);
 
-  // Atomically add a new region to the "regions" array field.
+  // update users doc
+  // update users doc
   await updateDoc(roomUsersRef, {
     users: arrayUnion(newUser),
   });
 
-  // localStorage.setItem(LS_USER_ID_KEY, currUser.id);
+  // update stories doc with this new user in every story
+  await updateUserInStories(roomId, newUser);
+};
+
+const updateUserInStories = async (roomId: string, user: RoomUser) => {
+  const roomData = (await getRoomData(roomId)) as RoomInfo;
+  const { stories } = roomData;
+
+  if (!stories.length) return;
+
+  const updatedStories = stories.map((story) => ({
+    ...story,
+    points: [
+      ...story.points,
+      {
+        point: 'NA',
+        userId: user.userId,
+      },
+    ],
+  }));
+
+  await updateDoc(doc(db, 'planning', roomId), {
+    stories: updatedStories,
+  });
 };
 interface RoomPageParams {
   params: {
