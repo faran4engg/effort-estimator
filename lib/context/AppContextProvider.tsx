@@ -29,12 +29,13 @@ const AppContextProvider = ({
   useEffect(() => {
     const unsub = onSnapshot(doc(db, 'planning', roomId), (updatedDoc) => {
       const updatedRoomInfo = updatedDoc.data() as RoomInfo;
-      console.log(111, 'updated data: ', updatedDoc.data());
+
       updateRoomInfo(updatedRoomInfo);
     });
 
     return () => {
-      console.log(111, 'unsubbing firestore');
+      // eslint-disable-next-line no-console
+      console.log(111, 'unsubscribing from firestore...');
       unsub();
     };
   }, []);

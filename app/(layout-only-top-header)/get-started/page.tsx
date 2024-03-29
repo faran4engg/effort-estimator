@@ -5,7 +5,6 @@ import CreateRoomButton from '@/components/CreateRoomButton/CreateRoomButton';
 
 const GetStarted = async () => {
   const user = await currentUser();
-  // console.log(111, user);
 
   return (
     <Container>
