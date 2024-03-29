@@ -4,7 +4,7 @@ export interface RoomInfo {
   roomName: string;
   roomId: string;
   stories: StoryProps[];
-  users: User[];
+  users: RoomUser[];
 }
 
 export interface StoryProps {
@@ -20,16 +20,17 @@ export interface StoryPointRecord {
   userId: string;
 }
 
-export interface User {
+export interface RoomUser {
   isAdmin: boolean;
   userId: string;
   userName: string;
+  userImg: string;
   createdAt: number;
 }
 
 /////
 
-export interface CreateRoomForm {
+export interface CreateRoomFormProps {
   roomName: string;
   userName: string;
 }

@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ClerkLoaded, ClerkLoading, UserButton, useUser } from '@clerk/nextjs';
 import {
   Box,
   Burger,
@@ -19,6 +18,7 @@ import {
   rem,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import { ClerkLoaded, ClerkLoading, UserButton, useUser } from '@clerk/nextjs';
 import ThemeChanger from '@/components/ThemeChanger';
 import classes from './UnprotectedLayoutHeader.module.css';
 
@@ -51,7 +51,11 @@ const UnprotectedLayoutHeader = () => {
 
           <Group visibleFrom="sm">
             {!user && (
-              <Button onClick={() => router.push('/sign-in')} tt="capitalize">
+              <Button
+                radius="md"
+                onClick={() => router.push('/sign-in')}
+                tt="capitalize"
+              >
                 Signin
               </Button>
             )}
@@ -102,7 +106,11 @@ const UnprotectedLayoutHeader = () => {
           <Group>
             <Stack p="md" gap="lg" w="100%" justify="center" align="center">
               {!user ? (
-                <Button onClick={() => router.push('/sign-in')} tt="capitalize">
+                <Button
+                  radius="md"
+                  onClick={() => router.push('/sign-in')}
+                  tt="capitalize"
+                >
                   Signin
                 </Button>
               ) : (

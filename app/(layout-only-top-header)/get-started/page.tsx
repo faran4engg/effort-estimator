@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import { currentUser } from '@clerk/nextjs';
 import { Box, Button, Container, Divider, Flex, Text } from '@mantine/core';
+import { currentUser } from '@clerk/nextjs';
 import CreateRoomButton from '@/components/CreateRoomButton/CreateRoomButton';
 
 const GetStarted = async () => {
@@ -27,7 +27,9 @@ const GetStarted = async () => {
       <Divider my="lg" label="OR" labelPosition="center" />
       <div>
         <Flex justify="center" align="center" gap="md">
-          <Button variant="default">Join Room</Button>
+          <Button size="xl" radius="md" variant="default">
+            Join Room
+          </Button>
           <Box
             pos="relative"
             w={{ base: '120px', lg: '150px', xl: '200px' }}

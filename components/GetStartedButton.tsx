@@ -7,7 +7,9 @@ const GetStartedButton = () => {
   const router = useRouter();
   return (
     <Flex justify="center" mt="xl">
-      <Button onClick={() => router.push('/get-started')}>Get Started</Button>
+      <Button size="xl" radius="md" onClick={() => router.push('/get-started')}>
+        Get Started
+      </Button>
     </Flex>
   );
 };

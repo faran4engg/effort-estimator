@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
-import { ClerkProvider } from '@clerk/nextjs';
 import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 import '@mantine/core/styles.css';
+import { ClerkProvider } from '@clerk/nextjs';
 import { spaceGroteskFont } from '@/core/fonts';
 import TanstackQueryProvider from '@/lib/providers/tanstack-query-provider';
 import { theme } from '@/theme/theme';

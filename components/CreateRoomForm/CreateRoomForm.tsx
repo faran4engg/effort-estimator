@@ -2,7 +2,6 @@
 
 import { FC } from 'react';
 import { useRouter } from 'next/navigation';
-
 import {
   Box,
   Button,
@@ -11,27 +10,29 @@ import {
   Paper,
   TextInput,
 } from '@mantine/core';
-
 import { hasLength, useForm } from '@mantine/form';
-import { doc, setDoc } from 'firebase/firestore';
 import { useDisclosure } from '@mantine/hooks';
-
+import { doc, setDoc } from 'firebase/firestore';
 import { db } from '@/firebase/firebase';
-import { CreateRoomForm, RoomInfo } from '@/core/types';
+import { LS_USER_ID_KEY } from '@/core/constants';
+import { CreateRoomFormProps, RoomInfo } from '@/core/types';
 import { getUUID } from '@/utils/getUUID';
 import { sleep } from '@/utils/sleep';
 
 interface Props {
-userName: string;
+  userFirstName: string;
+  userImg: string;
+  userId: string;
 }
-const CreateRoomForm:FC<Props> = ({ userName }) => {
+const CreateRoomForm: FC<Props> = ({ userFirstName, userImg, userId }) => {
   const [visible, { toggle }] = useDisclosure(false);
-const router = useRouter();
 
-  const form = useForm<CreateRoomForm>({
+  const router = useRouter();
+
+  const form = useForm<CreateRoomFormProps>({
     initialValues: {
       roomName: '',
-      userName,
+      userName: userFirstName,
     },
     validate: {
       userName: hasLength(
@@ -53,14 +54,16 @@ const router = useRouter();
 
     const adminUser = {
       createdAt: Date.now(),
-      userId: getUUID(),
+      userId,
       userName: values.userName,
+      // userImg from google login
+      userImg,
       // room creator is an Admin
       isAdmin: true,
     };
 
-const roomId = `room-${getUUID()}`;
-    const newRoom: RoomInfo = {
+    const roomId = `room-${getUUID()}`;
+    const newRoomData: RoomInfo = {
       roomName: values.roomName,
       roomId,
       createdAt: Date.now(),
@@ -68,9 +71,10 @@ const roomId = `room-${getUUID()}`;
       stories: [],
     };
 
-await setDoc(doc(db, 'rooms', roomId), newRoom);
-toggle();
-router.push(`/planning/${roomId}`);
+    await setDoc(doc(db, 'planning', roomId), newRoomData);
+    toggle();
+    localStorage.setItem(LS_USER_ID_KEY, userId);
+    router.push(`/planning/${roomId}`);
   };
 
   return (
@@ -92,12 +96,14 @@ router.push(`/planning/${roomId}`);
       >
         <Flex direction="column" gap="md">
           <TextInput
+            size="lg"
             label="Room Name"
             placeholder="ex. Refinement 2.23"
             withAsterisk
             {...form.getInputProps('roomName')}
           />
           <TextInput
+            size="lg"
             label="Your Name"
             placeholder="ex. John Doe"
             withAsterisk
@@ -105,7 +111,7 @@ router.push(`/planning/${roomId}`);
           />
         </Flex>
 
-        <Button fullWidth mt="xl" type="submit">
+        <Button size="xl" radius="md" fullWidth mt="xl" type="submit">
           Create
         </Button>
       </Paper>

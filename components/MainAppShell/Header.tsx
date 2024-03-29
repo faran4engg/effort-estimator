@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import Link from 'next/link';
-import { ClerkLoaded, ClerkLoading, UserButton } from '@clerk/nextjs';
 import { Burger, Flex, Group, Image, Loader, Text } from '@mantine/core';
+import { ClerkLoaded, ClerkLoading, UserButton } from '@clerk/nextjs';
 import ThemeChanger from '@/components/ThemeChanger';
 
 interface HeaderProps {
