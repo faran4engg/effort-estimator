@@ -9,13 +9,11 @@ import AppContext, { Context } from './AppContext';
 const AppContextProvider = ({
   children,
   roomId,
-  initialData,
 }: {
   children: JSX.Element | JSX.Element[];
   roomId: string;
-  initialData: RoomInfo;
 }) => {
-  const [roomInfo, setRoomInfo] = useState<RoomInfo>(initialData);
+  const [roomInfo, setRoomInfo] = useState<RoomInfo>({} as RoomInfo);
 
   const updateRoomInfo = (updatedRoomInfo: RoomInfo) => {
     setRoomInfo(updatedRoomInfo);

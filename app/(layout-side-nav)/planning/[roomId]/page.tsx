@@ -5,7 +5,6 @@ import { User } from '@clerk/nextjs/dist/types/server';
 import { arrayUnion, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '@/firebase/firebase';
 import { RoomInfo, RoomUser } from '@/core/types';
-import AppContextProvider from '@/lib/context/AppContextProvider';
 
 const getRoomData = async (roomId: string) => {
   const docRef = doc(db, 'planning', roomId);
@@ -65,11 +64,7 @@ const RoomPage: FC<RoomPageParams> = async ({ params }) => {
 
   await updateUser(roomData.users, user, params.roomId);
 
-  return (
-    <AppContextProvider roomId={params.roomId} initialData={roomData}>
-      <div>Home Page 111</div>
-    </AppContextProvider>
-  );
+  return <div>Home Page 111 {user.firstName}</div>;
 };
 
 export default RoomPage;

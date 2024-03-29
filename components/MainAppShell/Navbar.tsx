@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { AppShellSection, ScrollArea, Text } from '@mantine/core';
+import Stories from '@/components/Stories/Stories';
 
 interface NavbarProps {
   opened: boolean;
@@ -16,7 +17,9 @@ const Navbar: FC<NavbarProps> = ({ opened, close }) => (
   // };
 
   <>
-    <AppShellSection grow mb="md" component={ScrollArea}></AppShellSection>
+    <AppShellSection grow mb="md" component={ScrollArea}>
+      <Stories />
+    </AppShellSection>
     <AppShellSection>
       <hr />
       <Text tt="capitalize" ta="center" size="sm">
