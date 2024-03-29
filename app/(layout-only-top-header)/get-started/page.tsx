@@ -4,6 +4,7 @@ import { Box, Button, Container, Divider, Flex, Text } from '@mantine/core';
 
 const GetStarted = async () => {
   const user = await currentUser();
+  // console.log(111, user);
 
   return (
     <Container>
