@@ -11,11 +11,13 @@ interface HeaderProps {
 const Header: FC<HeaderProps> = ({ opened, toggle }) => (
   <Group h="100%" px="lg" justify="space-between" align="center">
     <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-    {/* <MantineLogo size={30} /> */}
+
     <Link href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
       <Flex align="center" gap="4">
-        <Image alt="our logo" src="/icon.png" h={35} w={35} />
-        <Text fw="bold">Effort Estimator</Text>
+        <Image alt="our logo" src="/mascot.svg" h={35} w={35} />
+        <Text visibleFrom="xs" fw="bold">
+          Effort Estimator
+        </Text>
       </Flex>
     </Link>
     <Group>

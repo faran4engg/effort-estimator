@@ -38,14 +38,18 @@ const UnprotectedLayoutHeader = () => {
         <Group justify="space-between" h="100%">
           <Link href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
             <Flex align="center" gap="4">
-              <Image alt="our logo" src="/icon.png" h={35} w={35} />
-              <Text fw="bold">Effort Estimator</Text>
+              <Image alt="our logo" src="/mascot.svg" h={35} w={35} />
+              <Text visibleFrom="xs" fw="bold">
+                Effort Estimator
+              </Text>
             </Flex>
           </Link>
 
           <Group visibleFrom="sm">
             {!user && (
-              <Button onClick={() => router.push('/sign-in')}>Signin</Button>
+              <Button onClick={() => router.push('/sign-in')} tt="capitalize">
+                Signin
+              </Button>
             )}
 
             <ThemeChanger />
@@ -63,7 +67,7 @@ const UnprotectedLayoutHeader = () => {
           </Group>
           <Group hiddenFrom="sm">
             <ClerkLoading>
-              <Loader />
+              <Loader size="sm" />
             </ClerkLoading>
             <ClerkLoaded>
               <UserButton afterSignOutUrl="/" />
@@ -94,7 +98,9 @@ const UnprotectedLayoutHeader = () => {
           <Group>
             <Stack p="md" gap="lg" w="100%" justify="center" align="center">
               {!user ? (
-                <Button onClick={() => router.push('/sign-in')}>Signin</Button>
+                <Button onClick={() => router.push('/sign-in')} tt="capitalize">
+                  Signin
+                </Button>
               ) : (
                 <p>Join Room</p>
               )}

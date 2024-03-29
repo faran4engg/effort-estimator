@@ -18,7 +18,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <html lang="en">
         <head>
           <ColorSchemeScript />
-          <link rel="shortcut icon" href="/icon.png" />
+          <link rel="shortcut icon" href="/mascot.svg" />
           <meta
             name="viewport"
             content="minimum-scale=1, initial-scale=1, width=device-width maximum-scale=2 "
