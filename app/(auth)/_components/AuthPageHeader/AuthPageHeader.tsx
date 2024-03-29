@@ -9,7 +9,7 @@ function AuthPageHeader() {
       <Container size="md" className={classes.inner}>
         <Link href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
           <Flex align="center" gap="4">
-            <Image alt="our logo" src="/mascot.svg" h={35} w={35} />
+            <Image alt="our logo" src="/mascot.svg" h={35} w={35} radius="md" />
             <Text fw="bold">Effort Estimator</Text>
           </Flex>
         </Link>

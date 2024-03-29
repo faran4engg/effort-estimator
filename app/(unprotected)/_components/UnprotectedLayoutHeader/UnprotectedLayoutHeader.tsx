@@ -38,7 +38,13 @@ const UnprotectedLayoutHeader = () => {
         <Group justify="space-between" h="100%">
           <Link href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
             <Flex align="center" gap="4">
-              <Image alt="our logo" src="/mascot.svg" h={35} w={35} />
+              <Image
+                alt="our logo"
+                src="/mascot.svg"
+                h={35}
+                w={35}
+                radius="md"
+              />
               <Text visibleFrom="xs" fw="bold">
                 Effort Estimator
               </Text>
