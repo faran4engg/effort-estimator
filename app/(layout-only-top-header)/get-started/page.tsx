@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { currentUser } from '@clerk/nextjs';
 import { Box, Button, Container, Divider, Flex, Text } from '@mantine/core';
+import CreateRoomButton from '@/components/CreateRoomButton/CreateRoomButton';
 
 const GetStarted = async () => {
   const user = await currentUser();
@@ -17,7 +18,7 @@ const GetStarted = async () => {
           >
             <Image src="/woman.svg" fill alt="Woman" />
           </Box>
-          <Button>Create Room</Button>
+          <CreateRoomButton />
         </Flex>
         <Text my="lg" size="lg" ta="center">
           Create a room and share the room link with your team !
