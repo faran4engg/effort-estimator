@@ -28,8 +28,6 @@ const UnprotectedLayoutHeader = () => {
 
   const { user } = useUser();
 
-  console.log(111, user);
-
   const router = useRouter();
 
   return (
