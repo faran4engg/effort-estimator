@@ -8,6 +8,7 @@ import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '@/firebase/firebase';
 import { useAppContext } from '@/lib/context/AppContext';
 import CopyRoomLink from '../CopyRoomLink';
+import classes from './admin-control-area.module.css';
 
 const AdminControlArea: FC<{ storyId: string }> = ({ storyId }) => {
   const previousStoryId = usePrevious(storyId);
@@ -36,7 +37,7 @@ const AdminControlArea: FC<{ storyId: string }> = ({ storyId }) => {
   }, [storyId]);
 
   return (
-    <Card radius="md" withBorder>
+    <Card radius="md" withBorder className={classes.card}>
       <Flex
         gap="lg"
         justify="space-between"

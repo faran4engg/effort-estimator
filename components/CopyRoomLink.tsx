@@ -2,8 +2,13 @@
 
 import { Check, Copy } from 'lucide-react';
 import { ActionIcon, CopyButton, Tooltip, rem } from '@mantine/core';
+import useIsMounted from '@/hooks/useIsMounted';
 
 const CopyRoomLink = () => {
+  const isMounted = useIsMounted();
+
+  if (!isMounted) return <>...</>;
+
   const roomURL = window.location.href;
   return (
     <CopyButton value={roomURL} timeout={1500}>

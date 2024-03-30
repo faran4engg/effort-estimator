@@ -8,6 +8,8 @@ module.exports = {
         'mantine-breakpoint-md': '62em',
         'mantine-breakpoint-lg': '75em',
         'mantine-breakpoint-xl': '88em',
+        'mantine-breakpoint-2xl': '100em',
+        'mantine-breakpoint-3xl': '120em',
       },
     },
   },

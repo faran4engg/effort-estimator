@@ -8,8 +8,9 @@ import classes from './UserCard.module.css';
 
 const UserCard: FC<{
   user: RoomUser;
+  userAvatar: string;
   currentlyEstimatingStory?: StoryProps;
-}> = ({ user, currentlyEstimatingStory }) => {
+}> = ({ user, userAvatar, currentlyEstimatingStory }) => {
   const context = useAppContext();
   const userPoints = currentlyEstimatingStory?.points.find(
     (p) => p.userId === user.userId,
@@ -18,11 +19,17 @@ const UserCard: FC<{
   return (
     <Card radius="lg" shadow="sm" p="lg" className={classes.card}>
       {context.revealResults ? (
-        <Avatar size={100} radius={100} mx="auto">
+        <Avatar size={80} radius={100} mx="auto">
           {userPoints?.point === 'NA' ? '🥱' : userPoints?.point}
         </Avatar>
       ) : (
-        <Avatar src={user.userImg} size={100} radius={100} mx="auto" />
+        <Avatar
+          src={userAvatar}
+          size={80}
+          radius="lg"
+          mx="auto"
+          style={{ boxShadow: 'rgb(0 0 0 / 30%) 4px 4px 10px 0px' }}
+        />
       )}
       <Text ta="center" fz="lg" mt="lg">
         {user.userName}
