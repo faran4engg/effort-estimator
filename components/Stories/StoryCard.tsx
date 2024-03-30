@@ -9,6 +9,7 @@ interface Props {
   canStartEstimation: boolean;
   startEstimation: (story: StoryProps) => Promise<void>;
   deleteStory: (story: StoryProps) => Promise<void>;
+  storyBanner: string;
 }
 const StoryCard: FC<Props> = ({
   story,
@@ -16,6 +17,7 @@ const StoryCard: FC<Props> = ({
   canStartEstimation = false,
   startEstimation,
   deleteStory,
+  storyBanner,
 }) => (
   <Card
     shadow="sm"
@@ -25,11 +27,7 @@ const StoryCard: FC<Props> = ({
     className={isEstimating ? 'animate-wiggle' : ''}
   >
     <Card.Section>
-      <Image
-        src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
-        height={60}
-        alt="Story Card"
-      />
+      <Image src={storyBanner} height={80} alt="Story Card" />
     </Card.Section>
 
     <Group justify="space-between" pt="lg" grow>

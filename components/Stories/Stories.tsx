@@ -3,12 +3,14 @@
 import { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { PlusIcon } from 'lucide-react';
-import { Button, Card, Skeleton } from '@mantine/core';
+import { Button, Card, LoadingOverlay, Skeleton } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { useUser } from '@clerk/nextjs';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '@/firebase/firebase';
 import { StoryProps } from '@/core/types';
 import { useAppContext } from '@/lib/context/AppContext';
+import { sleep } from '@/utils/sleep';
 import AddStory from './AddStory';
 import StoryCard from './StoryCard';
 
@@ -16,6 +18,8 @@ const Stories = () => {
   const { roomId } = useParams();
   const { user } = useUser();
   const router = useRouter();
+
+  const [visible, { open, close }] = useDisclosure(false);
 
   const [showAddStoryCard, setShowAddStoryCard] = useState<boolean>(false);
 
@@ -65,17 +69,17 @@ const Stories = () => {
   };
 
   const deleteStory = async (storyToUpdate: StoryProps) => {
+    open();
     const { stories } = context.roomInfo;
-
+    await sleep(2000);
     const updatedStories = stories.filter(
       (story) => story.storyId !== storyToUpdate.storyId,
     );
-
     await updateDoc(doc(db, 'planning', roomId as string), {
       stories: updatedStories,
     });
+    close();
 
-    // context.updateCurrentlyEstimatingStory({} as StoryProps);
     router.refresh();
   };
 
@@ -108,10 +112,19 @@ const Stories = () => {
         />
       )}
 
-      {context.roomInfo.stories.map((story: StoryProps) => (
-        <div key={story.storyId} style={{ marginBottom: '1.5rem' }}>
+      {context.roomInfo.stories.map((story: StoryProps, idx) => (
+        <div
+          key={story.storyId}
+          style={{ marginBottom: '1.5rem', position: 'relative' }}
+        >
+          <LoadingOverlay
+            visible={visible}
+            zIndex={1000}
+            overlayProps={{ radius: 'sm', blur: 2 }}
+          />
           <StoryCard
             story={story}
+            storyBanner={`/banners/${idx % 6}.jpg`}
             startEstimation={startEstimation}
             deleteStory={deleteStory}
             isEstimating={story.isEstimating}
