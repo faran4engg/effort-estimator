@@ -41,7 +41,12 @@ const Stories = () => {
 
   const startEstimation = async (storyToUpdate: StoryProps) => {
     const { stories } = context.roomInfo;
-    context.updateRevealResults(false);
+
+    const roomUsersRef = doc(db, 'planning', context.roomInfo.roomId);
+    await updateDoc(roomUsersRef, {
+      revealResults: false,
+    });
+
     const index = stories.findIndex(
       (story) => story.storyId === storyToUpdate.storyId,
     );
