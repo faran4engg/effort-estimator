@@ -100,13 +100,10 @@ const RoomPage: FC<RoomPageParams> = async ({ params }) => {
     <>
       {currentlyEstimatingStory && (
         <Box hiddenFrom="sm" mb="md">
-          <PointsArea />
+          <PointsArea roomId={params.roomId as string} />
         </Box>
       )}
-      <UserArea
-        roomId={params.roomId}
-        currentlyEstimatingStory={currentlyEstimatingStory}
-      />
+      <UserArea currentlyEstimatingStory={currentlyEstimatingStory} />
 
       {currentlyEstimatingStory && (
         <>
@@ -117,7 +114,7 @@ const RoomPage: FC<RoomPageParams> = async ({ params }) => {
             left="calc(50% + 150px)"
             style={{ transform: 'translateX(-50%)' }}
           >
-            <PointsArea />
+            <PointsArea roomId={params.roomId as string} />
           </Box>
         </>
       )}

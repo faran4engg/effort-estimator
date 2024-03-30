@@ -7,13 +7,12 @@ import { useAppContext } from '@/lib/context/AppContext';
 import UserCard from '../UserCard/UserCard';
 
 interface Props {
-  roomId: string;
   currentlyEstimatingStory?: StoryProps;
 }
-const UserArea: FC<Props> = ({ roomId, currentlyEstimatingStory }) => {
+const UserArea: FC<Props> = ({ currentlyEstimatingStory }) => {
   const context = useAppContext();
 
-  if (!context?.roomInfo?.users?.length) return <p>No Users</p>;
+  if (!context?.roomInfo?.users?.length) return <p>Loading...</p>;
 
   const { users } = context.roomInfo;
   return (

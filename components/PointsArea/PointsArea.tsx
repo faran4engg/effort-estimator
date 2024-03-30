@@ -3,47 +3,82 @@
 import { FC, useState } from 'react';
 import { Card, Center, Flex, Text, UnstyledButton } from '@mantine/core';
 import { useUser } from '@clerk/nextjs';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { db } from '@/firebase/firebase';
+import { StoryProps } from '@/core/types';
 import { useAppContext } from '@/lib/context/AppContext';
+import { getRandomNumberBetween } from '@/utils/getRandomNumberBetween';
+import { sleep } from '@/utils/sleep';
 import classes from './points-area.module.css';
 import { cardPoints } from './points-data';
 
-interface Props {}
+interface Props {
+  roomId: string;
+}
 
-const PointsArea: FC<Props> = ({}) => {
+const PointsArea: FC<Props> = ({ roomId }) => {
   const { user } = useUser();
   const context = useAppContext();
-  const { points } = context.currentlyEstimatingStory;
 
-  const userSelectedPoint = points?.find((p) => p.userId === user?.id);
+  const currentlyEstimatingStory = context.roomInfo.stories?.find(
+    (s) => !!s.isEstimating,
+  ) as StoryProps;
+
+  const userSelectedPoint = currentlyEstimatingStory?.points?.find(
+    (p) => p.userId === user?.id,
+  );
   const [selectedPoint, setSelectedPoint] = useState(
     userSelectedPoint ? userSelectedPoint.point : '',
   );
 
+  if (!user?.id) {
+    return <p>Oops! No user identified!</p>;
+  }
   if (!context?.currentlyEstimatingStory) {
     return <p>No story us being estimated</p>;
   }
 
-  // const selectPoint = async (point: string) => {
-  //   if (!user?.userId) return;
-  //   const { points, storyId } = currentlyEstimatingStory;
-  //   setSelectedPoint(point);
+  const selectPoint = async (point: string) => {
+    if (!user?.id) return;
 
-  //   const allStories = roomInfo.stories;
-  //   const storyToUpdateIndex = allStories.findIndex(
-  //     (story) => story.storyId === storyId,
-  //   );
+    setSelectedPoint(point);
 
-  //   const pointsForCurrentUserIndex = points.findIndex(
-  //     (point) => point.userId === user.userId,
-  //   );
+    const delaySeconds = getRandomNumberBetween(150, 3000); // between 150 to 3000 ms
+    await sleep(delaySeconds);
 
-  //   await axios.put(
-  //     `${NEXT_DB_HOST}/rooms/${roomId}/stories/${storyToUpdateIndex}/points/${pointsForCurrentUserIndex}.json`,
-  //     { point, userId: user.userId },
-  //   );
+    const allStories = context.roomInfo.stories;
+    const storyToUpdateIndex = allStories.findIndex(
+      (story) => story.storyId === currentlyEstimatingStory.storyId,
+    );
 
-  //   await axios.post('/api/user-gave-points', { roomId });
-  // };
+    const pointsForCurrentUserIndex = currentlyEstimatingStory.points.findIndex(
+      (p) => p.userId === user.id,
+    );
+
+    const roomRef = doc(db, 'planning', roomId);
+
+    getDoc(roomRef)
+      // eslint-disable-next-line @typescript-eslint/no-shadow
+      .then((doc) => {
+        if (doc.exists()) {
+          const data = doc.data();
+
+          const storyToUpdate = { ...data.stories[storyToUpdateIndex] };
+          storyToUpdate.points[pointsForCurrentUserIndex].point = point;
+
+          data.stories.splice(storyToUpdateIndex, 1, storyToUpdate);
+
+          updateDoc(roomRef, {
+            stories: [...data.stories],
+          });
+        } else {
+          console.error('Document not found');
+        }
+      })
+      .catch((error) => {
+        console.error('Error getting document:', error);
+      });
+  };
 
   return (
     <Center>
@@ -55,7 +90,7 @@ const PointsArea: FC<Props> = ({}) => {
               className={classes.item}
               p={4}
               c={item.color}
-              // onClick={() => selectPoint(item.point)}
+              onClick={() => selectPoint(item.point)}
               style={{
                 border:
                   selectedPoint === item.point ? '2px solid #1971c2' : 'none',
