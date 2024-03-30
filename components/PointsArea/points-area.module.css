@@ -4,6 +4,7 @@
     var(--mantine-color-dark-6)
   );
 }
+
 .item {
   height: rem(60px);
   width: rem(60px);
@@ -21,6 +22,7 @@
     box-shadow 150ms ease,
     transform 100ms ease;
 }
+
 .item:hover {
   box-shadow: var(--mantine-shadow-md);
   transform: scale(1.05);

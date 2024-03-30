@@ -74,6 +74,9 @@ const Stories = () => {
     await updateDoc(doc(db, 'planning', roomId as string), {
       stories: updatedStories,
     });
+
+    context.updateCurrentlyEstimatingStory({} as StoryProps);
+    router.refresh();
   };
 
   return (

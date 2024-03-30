@@ -15,18 +15,17 @@ const AppContextProvider = ({
 }) => {
   const [roomInfo, setRoomInfo] = useState<RoomInfo>({} as RoomInfo);
   const [currentlyEstimatingStory, setCurrentlyEstimatingStory] =
-    useState<StoryProps>({} as StoryProps);
+    useState<StoryProps | null>({} as StoryProps);
 
   const updateRoomInfo = (updatedRoomInfo: RoomInfo) => {
     setRoomInfo(updatedRoomInfo);
   };
-  const updateCurrentlyEstimatingStory = (story: StoryProps) => {
+  const updateCurrentlyEstimatingStory = (story: StoryProps | null) => {
     setCurrentlyEstimatingStory(story);
   };
 
   const updatedContext: Context = {
     roomInfo,
-
     updateRoomInfo,
     currentlyEstimatingStory,
     updateCurrentlyEstimatingStory,
@@ -35,8 +34,14 @@ const AppContextProvider = ({
   useEffect(() => {
     const unsub = onSnapshot(doc(db, 'planning', roomId), (updatedDoc) => {
       const updatedRoomInfo = updatedDoc.data() as RoomInfo;
-
       updateRoomInfo(updatedRoomInfo);
+      const estimatingStory = updatedRoomInfo.stories.find(
+        (s) => !!s.isEstimating,
+      );
+
+      estimatingStory
+        ? updateCurrentlyEstimatingStory(estimatingStory)
+        : updateCurrentlyEstimatingStory(null);
     });
 
     return () => {

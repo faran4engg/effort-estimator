@@ -35,25 +35,31 @@ const PointsArea: FC<Props> = ({ roomId }) => {
     return <p>Oops! No user identified!</p>;
   }
   if (!context?.currentlyEstimatingStory) {
-    return <p>No story us being estimated</p>;
+    return <p>No story is being estimated</p>;
   }
 
   const selectPoint = async (point: string) => {
     if (!user?.id) return;
 
-    setSelectedPoint(point);
-
     const delaySeconds = getRandomNumberBetween(150, 3000); // between 150 to 3000 ms
     await sleep(delaySeconds);
+
+    setSelectedPoint(point);
 
     const allStories = context.roomInfo.stories;
     const storyToUpdateIndex = allStories.findIndex(
       (story) => story.storyId === currentlyEstimatingStory.storyId,
     );
 
-    const pointsForCurrentUserIndex = currentlyEstimatingStory.points.findIndex(
-      (p) => p.userId === user.id,
-    );
+    const pointsForCurrentUserIndex =
+      currentlyEstimatingStory?.points.findIndex((p) => p.userId === user.id);
+
+    if (
+      pointsForCurrentUserIndex === undefined ||
+      pointsForCurrentUserIndex === null
+    ) {
+      return;
+    }
 
     const roomRef = doc(db, 'planning', roomId);
 
@@ -71,12 +77,7 @@ const PointsArea: FC<Props> = ({ roomId }) => {
           updateDoc(roomRef, {
             stories: [...data.stories],
           });
-        } else {
-          console.error('Document not found');
         }
-      })
-      .catch((error) => {
-        console.error('Error getting document:', error);
       });
   };
 

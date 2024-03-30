@@ -4,7 +4,7 @@ import { RoomInfo, StoryProps } from '@/core/types';
 export interface Context {
   roomInfo: RoomInfo;
   updateRoomInfo: (updatedRoomInfo: RoomInfo) => void;
-  currentlyEstimatingStory: StoryProps;
+  currentlyEstimatingStory: StoryProps | null;
   updateCurrentlyEstimatingStory: (story: StoryProps) => void;
 }
 
