@@ -1,11 +1,11 @@
 import { FC } from 'react';
-import { revalidatePath } from 'next/cache';
 import { notFound, redirect } from 'next/navigation';
 import { Box } from '@mantine/core';
 import { currentUser } from '@clerk/nextjs';
 import { User } from '@clerk/nextjs/dist/types/server';
 import { arrayUnion, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '@/firebase/firebase';
+import AdminControlArea from '@/components/AdminControlArea/AdminControlArea';
 import InfoMsgBox from '@/components/InfoMsg';
 import PointsArea from '@/components/PointsArea/PointsArea';
 import UserArea from '@/components/UserArea/UserArea';
@@ -74,7 +74,7 @@ const updateUserInStories = async (roomId: string, user: RoomUser) => {
     stories: updatedStories,
   });
 
-  revalidatePath('/planning');
+  // revalidatePath('/planning');
 };
 
 interface RoomPageParams {
@@ -101,12 +101,21 @@ const RoomPage: FC<RoomPageParams> = async ({ params }) => {
 
   const hasStories = roomData.stories?.length > 0;
   const adminUser = roomData.users.find((u) => u.isAdmin);
+  const isAdmin = adminUser?.userId === user?.id;
 
   return (
     <>
       {currentlyEstimatingStory && (
         <Box hiddenFrom="sm" mb="md">
           <PointsArea roomId={params.roomId as string} />
+          {isAdmin && hasStories && currentlyEstimatingStory && (
+            <Box my="md">
+              <AdminControlArea
+                roomId={params.roomId}
+                storyId={currentlyEstimatingStory.storyId}
+              />
+            </Box>
+          )}
         </Box>
       )}
 
@@ -152,6 +161,14 @@ const RoomPage: FC<RoomPageParams> = async ({ params }) => {
             left="calc(50% + 150px)"
             style={{ transform: 'translateX(-50%)' }}
           >
+            {isAdmin && hasStories && currentlyEstimatingStory && (
+              <Box my="md">
+                <AdminControlArea
+                  roomId={params.roomId}
+                  storyId={currentlyEstimatingStory.storyId}
+                />
+              </Box>
+            )}
             <PointsArea roomId={params.roomId as string} />
           </Box>
         </>

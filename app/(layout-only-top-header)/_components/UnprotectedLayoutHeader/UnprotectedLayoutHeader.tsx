@@ -42,6 +42,7 @@ const UnprotectedLayoutHeader = () => {
                 h={35}
                 w={35}
                 radius="md"
+                mr={4}
               />
               <Text visibleFrom="xs" fw="bold">
                 Effort Estimator

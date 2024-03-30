@@ -17,6 +17,7 @@ const AppContextProvider = ({
   const [roomInfo, setRoomInfo] = useState<RoomInfo>({} as RoomInfo);
   const [currentlyEstimatingStory, setCurrentlyEstimatingStory] =
     useState<StoryProps | null>({} as StoryProps);
+  const [revealResults, setRevealResults] = useState<boolean>(false);
 
   const router = useRouter();
 
@@ -27,11 +28,17 @@ const AppContextProvider = ({
     setCurrentlyEstimatingStory(story);
   };
 
+  const updateRevealResults = (flag: boolean) => {
+    setRevealResults(flag);
+  };
+
   const updatedContext: Context = {
     roomInfo,
     updateRoomInfo,
     currentlyEstimatingStory,
     updateCurrentlyEstimatingStory,
+    revealResults,
+    updateRevealResults,
   };
 
   useEffect(() => {

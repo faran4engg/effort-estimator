@@ -14,7 +14,14 @@ const Header: FC<HeaderProps> = ({ opened, toggle }) => (
 
     <Link href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
       <Flex align="center" gap="4">
-        <Image alt="our logo" src="/mascot.svg" h={35} w={35} radius="md" />
+        <Image
+          alt="our logo"
+          src="/mascot.svg"
+          h={35}
+          w={35}
+          radius="md"
+          mr={4}
+        />
         <Text visibleFrom="xs" fw="bold">
           Effort Estimator
         </Text>
