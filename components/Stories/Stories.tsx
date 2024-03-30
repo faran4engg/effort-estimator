@@ -59,7 +59,7 @@ const Stories = () => {
       stories: updatedStories,
     });
 
-    context.updateCurrentlyEstimatingStory(estimatingStory);
+    // context.updateCurrentlyEstimatingStory(estimatingStory);
 
     router.refresh();
   };
@@ -75,7 +75,7 @@ const Stories = () => {
       stories: updatedStories,
     });
 
-    context.updateCurrentlyEstimatingStory({} as StoryProps);
+    // context.updateCurrentlyEstimatingStory({} as StoryProps);
     router.refresh();
   };
 

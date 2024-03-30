@@ -41,10 +41,10 @@ const PointsArea: FC<Props> = ({ roomId }) => {
   const selectPoint = async (point: string) => {
     if (!user?.id) return;
 
+    setSelectedPoint(point);
+
     const delaySeconds = getRandomNumberBetween(150, 3000); // between 150 to 3000 ms
     await sleep(delaySeconds);
-
-    setSelectedPoint(point);
 
     const allStories = context.roomInfo.stories;
     const storyToUpdateIndex = allStories.findIndex(

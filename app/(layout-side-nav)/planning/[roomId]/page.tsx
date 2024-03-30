@@ -1,10 +1,12 @@
 import { FC } from 'react';
+import { revalidatePath } from 'next/cache';
 import { notFound, redirect } from 'next/navigation';
 import { Box } from '@mantine/core';
 import { currentUser } from '@clerk/nextjs';
 import { User } from '@clerk/nextjs/dist/types/server';
 import { arrayUnion, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '@/firebase/firebase';
+import InfoMsgBox from '@/components/InfoMsg';
 import PointsArea from '@/components/PointsArea/PointsArea';
 import UserArea from '@/components/UserArea/UserArea';
 import { RoomInfo, RoomUser } from '@/core/types';
@@ -71,6 +73,8 @@ const updateUserInStories = async (roomId: string, user: RoomUser) => {
   await updateDoc(doc(db, 'planning', roomId), {
     stories: updatedStories,
   });
+
+  revalidatePath('/planning');
 };
 
 interface RoomPageParams {
@@ -94,7 +98,9 @@ const RoomPage: FC<RoomPageParams> = async ({ params }) => {
   const currentlyEstimatingStory = roomData.stories?.find(
     (story) => story.isEstimating,
   );
-  // const adminUser = roomData.users.find((u) => u.isAdmin);
+
+  const hasStories = roomData.stories?.length > 0;
+  const adminUser = roomData.users.find((u) => u.isAdmin);
 
   return (
     <>
@@ -103,7 +109,39 @@ const RoomPage: FC<RoomPageParams> = async ({ params }) => {
           <PointsArea roomId={params.roomId as string} />
         </Box>
       )}
+
       <UserArea currentlyEstimatingStory={currentlyEstimatingStory} />
+
+      {!hasStories && (
+        <Box
+          visibleFrom="sm"
+          pos="fixed"
+          bottom={20}
+          left="calc(50% + 150px)"
+          style={{ transform: 'translateX(-50%)' }}
+        >
+          <InfoMsgBox
+            msg1="Room admin"
+            msg2="will create a story shortly"
+            adminUser={adminUser}
+          />
+        </Box>
+      )}
+      {hasStories && !currentlyEstimatingStory && (
+        <Box
+          visibleFrom="sm"
+          pos="fixed"
+          bottom={20}
+          left="calc(50% + 150px)"
+          style={{ transform: 'translateX(-50%)' }}
+        >
+          <InfoMsgBox
+            msg1="Let's wait for the room admin"
+            msg2="to start estimation"
+            adminUser={adminUser}
+          />
+        </Box>
+      )}
 
       {currentlyEstimatingStory && (
         <>

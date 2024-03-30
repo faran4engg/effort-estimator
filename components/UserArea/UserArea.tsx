@@ -22,7 +22,7 @@ const UserArea: FC<Props> = ({ currentlyEstimatingStory }) => {
         verticalSpacing={{ base: 'md', sm: 'lg' }}
       >
         {users.map((user) => (
-          <UserCard user={user} />
+          <UserCard key={user.userId} user={user} />
         ))}
       </SimpleGrid>
 

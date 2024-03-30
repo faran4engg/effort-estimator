@@ -1,6 +1,7 @@
 'use client';
 
 import { FC } from 'react';
+import { useRouter } from 'next/navigation';
 import {
   Box,
   Button,
@@ -24,6 +25,7 @@ interface Props {
 }
 const AddStory: FC<Props> = ({ roomId, setShowAddStoryCard }) => {
   const context = useAppContext();
+  const router = useRouter();
 
   const [visible, { toggle }] = useDisclosure(false);
 
@@ -63,9 +65,10 @@ const AddStory: FC<Props> = ({ roomId, setShowAddStoryCard }) => {
       stories: updatedStories,
     });
 
-    await sleep(400);
     toggle();
     setShowAddStoryCard(false);
+    await sleep(400);
+    router.refresh();
   };
 
   return (
