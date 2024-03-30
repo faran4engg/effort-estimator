@@ -110,10 +110,7 @@ const RoomPage: FC<RoomPageParams> = async ({ params }) => {
           <PointsArea roomId={params.roomId as string} />
           {isAdmin && hasStories && currentlyEstimatingStory && (
             <Box my="md">
-              <AdminControlArea
-                roomId={params.roomId}
-                storyId={currentlyEstimatingStory.storyId}
-              />
+              <AdminControlArea storyId={currentlyEstimatingStory.storyId} />
             </Box>
           )}
         </Box>
@@ -163,10 +160,7 @@ const RoomPage: FC<RoomPageParams> = async ({ params }) => {
           >
             {isAdmin && hasStories && currentlyEstimatingStory && (
               <Box my="md">
-                <AdminControlArea
-                  roomId={params.roomId}
-                  storyId={currentlyEstimatingStory.storyId}
-                />
+                <AdminControlArea storyId={currentlyEstimatingStory.storyId} />
               </Box>
             )}
             <PointsArea roomId={params.roomId as string} />

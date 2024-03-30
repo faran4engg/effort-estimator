@@ -71,9 +71,10 @@ const StoryCard: FC<Props> = ({
     {isEstimating && !canStartEstimation && (
       <Flex justify="center" mt="xs">
         <Badge
-          size="sm"
-          variant="dot"
-          // gradient={{ from: 'blue', to: 'cyan', deg: 90 }}
+          c="#fff"
+          bg="var(--mantine-primary-color-5)"
+          size="md"
+          variant="outline"
           p="xs"
           tt="capitalize"
         >
