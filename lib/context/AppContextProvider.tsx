@@ -54,6 +54,8 @@ const AppContextProvider = ({
         ? updateCurrentlyEstimatingStory({ ...estimatingStory })
         : updateCurrentlyEstimatingStory(null);
 
+      setRevealResults(!!updatedRoomInfo?.revealResults);
+
       router.refresh();
     });
 

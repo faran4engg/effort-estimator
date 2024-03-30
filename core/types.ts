@@ -5,6 +5,7 @@ export interface RoomInfo {
   roomId: string;
   stories: StoryProps[];
   users: RoomUser[];
+  revealResults?: boolean;
 }
 
 export interface StoryProps {

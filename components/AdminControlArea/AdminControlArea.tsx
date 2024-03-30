@@ -4,6 +4,8 @@ import party from 'party-js';
 import { FC, useEffect } from 'react';
 import { Button, Card, Flex } from '@mantine/core';
 import { usePrevious } from '@mantine/hooks';
+import { doc, updateDoc } from 'firebase/firestore';
+import { db } from '@/firebase/firebase';
 import { useAppContext } from '@/lib/context/AppContext';
 import CopyRoomLink from '../CopyRoomLink';
 
@@ -13,12 +15,18 @@ const AdminControlArea: FC<{ storyId: string }> = ({ storyId }) => {
 
   const handleRevealResult = async () => {
     context.updateRevealResults(true);
-    // await axios.post('/api/reveal-results', { roomId, flag: true });
+    const roomUsersRef = doc(db, 'planning', context.roomInfo.roomId);
+    await updateDoc(roomUsersRef, {
+      revealResults: true,
+    });
   };
 
   const handleHideResult = async () => {
     context.updateRevealResults(false);
-    // await axios.post('/api/reveal-results', { roomId, flag: false });
+    const roomUsersRef = doc(db, 'planning', context.roomInfo.roomId);
+    await updateDoc(roomUsersRef, {
+      revealResults: false,
+    });
   };
 
   useEffect(() => {

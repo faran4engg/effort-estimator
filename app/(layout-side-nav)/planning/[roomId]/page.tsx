@@ -43,8 +43,6 @@ const updateUser = async (
   };
 
   const roomUsersRef = doc(db, 'planning', roomId);
-
-  // update users doc
   await updateDoc(roomUsersRef, {
     users: arrayUnion(newUser),
   });
