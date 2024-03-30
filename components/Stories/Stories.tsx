@@ -41,6 +41,7 @@ const Stories = () => {
 
   const startEstimation = async (storyToUpdate: StoryProps) => {
     const { stories } = context.roomInfo;
+    context.updateRevealResults(false);
     const index = stories.findIndex(
       (story) => story.storyId === storyToUpdate.storyId,
     );
