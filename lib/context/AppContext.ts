@@ -1,10 +1,11 @@
 import { createContext, useContext } from 'react';
-import { RoomInfo } from '@/core/types';
+import { RoomInfo, StoryProps } from '@/core/types';
 
 export interface Context {
   roomInfo: RoomInfo;
-
   updateRoomInfo: (updatedRoomInfo: RoomInfo) => void;
+  currentlyEstimatingStory: StoryProps;
+  updateCurrentlyEstimatingStory: (story: StoryProps) => void;
 }
 
 const initialContext: Context = {
@@ -12,6 +13,10 @@ const initialContext: Context = {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   updateRoomInfo: (updatedRoomInfo: RoomInfo) => {},
+
+  currentlyEstimatingStory: {} as StoryProps,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  updateCurrentlyEstimatingStory: (story: StoryProps) => {},
 };
 
 const AppContext = createContext(initialContext);

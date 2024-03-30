@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { doc, onSnapshot } from 'firebase/firestore';
 import { db } from '@/firebase/firebase';
-import { RoomInfo } from '@/core/types';
+import { RoomInfo, StoryProps } from '@/core/types';
 import AppContext, { Context } from './AppContext';
 
 const AppContextProvider = ({
@@ -14,14 +14,22 @@ const AppContextProvider = ({
   roomId: string;
 }) => {
   const [roomInfo, setRoomInfo] = useState<RoomInfo>({} as RoomInfo);
+  const [currentlyEstimatingStory, setCurrentlyEstimatingStory] =
+    useState<StoryProps>({} as StoryProps);
 
   const updateRoomInfo = (updatedRoomInfo: RoomInfo) => {
     setRoomInfo(updatedRoomInfo);
   };
+  const updateCurrentlyEstimatingStory = (story: StoryProps) => {
+    setCurrentlyEstimatingStory(story);
+  };
 
   const updatedContext: Context = {
     roomInfo,
+
     updateRoomInfo,
+    currentlyEstimatingStory,
+    updateCurrentlyEstimatingStory,
   };
 
   useEffect(() => {

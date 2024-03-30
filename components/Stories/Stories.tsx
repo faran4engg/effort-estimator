@@ -1,10 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { PlusIcon } from 'lucide-react';
 import { Button, Card, Skeleton } from '@mantine/core';
 import { useUser } from '@clerk/nextjs';
+import { doc, updateDoc } from 'firebase/firestore';
+import { db } from '@/firebase/firebase';
 import { StoryProps } from '@/core/types';
 import { useAppContext } from '@/lib/context/AppContext';
 import AddStory from './AddStory';
@@ -13,6 +15,7 @@ import StoryCard from './StoryCard';
 const Stories = () => {
   const { roomId } = useParams();
   const { user } = useUser();
+  const router = useRouter();
 
   const [showAddStoryCard, setShowAddStoryCard] = useState<boolean>(false);
 
@@ -32,76 +35,46 @@ const Stories = () => {
     (ctxUser) => ctxUser.userId === user?.id,
   )?.isAdmin;
 
-  // const startEstimation = async (storyToUpdate: StoryProps) => {
-  //   await axios.post('/api/reveal-results', { roomId, flag: false });
-  //   const index = stories?.findIndex(
-  //     (story) => story.storyId === storyToUpdate.storyId,
-  //   );
+  const startEstimation = async (storyToUpdate: StoryProps) => {
+    const { stories } = context.roomInfo;
+    const index = stories.findIndex(
+      (story) => story.storyId === storyToUpdate.storyId,
+    );
 
-  //   const estimatingStory: StoryProps = {
-  //     ...storyToUpdate,
-  //     isEstimating: true,
-  //   };
+    const estimatingStory: StoryProps = {
+      ...storyToUpdate,
+      isEstimating: true,
+    };
 
-  //   // make all stories's isEstimating as false
-  //   const updatedStories = stories.map((story) => ({
-  //     ...story,
-  //     isEstimating: false,
-  //   }));
+    // make all stories's isEstimating as false
+    const updatedStories = stories.map((story) => ({
+      ...story,
+      isEstimating: false,
+    }));
 
-  //   // and now update the one which is actually being estimated
-  //   updatedStories.splice(index, 1, estimatingStory);
+    // and now update the one which is actually being estimated
+    updatedStories.splice(index, 1, estimatingStory);
 
-  //   mutateUpdateStories(
-  //     // @ts-ignore
-  //     { roomId, stories: updatedStories },
-  //     {
-  //       onSuccess: async () => {
-  //         queryClient.invalidateQueries({ queryKey: ['room', roomId] });
-  //       },
-  //       onSettled: async () => {
-  //         // this api call is used for pusher
-  //         await axios.post('/api/start-estimate', {
-  //           roomId,
-  //           story: estimatingStory,
-  //         });
+    await updateDoc(doc(db, 'planning', roomId as string), {
+      stories: updatedStories,
+    });
 
-  //         router.refresh();
-  //       },
-  //     },
-  //   );
-  // };
+    context.updateCurrentlyEstimatingStory(estimatingStory);
 
-  // const deleteStory = async (storyToUpdate: StoryProps) => {
-  //   await axios.post('/api/reveal-results', { roomId, flag: false });
-  //   const index = stories?.findIndex(
-  //     (story) => story.storyId === storyToUpdate.storyId,
-  //   );
+    router.refresh();
+  };
 
-  //   // make all stories's isEstimating as false
-  //   const updatedStories = stories.filter(
-  //     (story) => story.storyId !== storyToUpdate.storyId,
-  //   );
+  const deleteStory = async (storyToUpdate: StoryProps) => {
+    const { stories } = context.roomInfo;
 
-  //   mutateUpdateStories(
-  //     // @ts-ignore
-  //     { roomId, stories: updatedStories },
-  //     {
-  //       onSuccess: async () => {
-  //         queryClient.invalidateQueries({ queryKey: ['room', roomId] });
-  //       },
-  //       onSettled: async () => {
-  //         // this api call is used for pusher
-  //         await axios.post('/api/stories', {
-  //           roomId,
-  //           storyName: storyToUpdate.storyName,
-  //         });
+    const updatedStories = stories.filter(
+      (story) => story.storyId !== storyToUpdate.storyId,
+    );
 
-  //         router.refresh();
-  //       },
-  //     },
-  //   );
-  // };
+    await updateDoc(doc(db, 'planning', roomId as string), {
+      stories: updatedStories,
+    });
+  };
 
   return (
     <>
@@ -136,11 +109,10 @@ const Stories = () => {
         <div key={story.storyId} style={{ marginBottom: '1.5rem' }}>
           <StoryCard
             story={story}
-            // startEstimation={startEstimation}
-            // deleteStory={deleteStory}
+            startEstimation={startEstimation}
+            deleteStory={deleteStory}
             isEstimating={story.isEstimating}
-            //  @ts-ignore
-            canStartEstimation={isAdmin}
+            canStartEstimation={!!isAdmin}
           />
         </div>
       ))}

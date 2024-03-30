@@ -1,9 +1,11 @@
 import { FC } from 'react';
 import { notFound, redirect } from 'next/navigation';
+import { Box } from '@mantine/core';
 import { currentUser } from '@clerk/nextjs';
 import { User } from '@clerk/nextjs/dist/types/server';
 import { arrayUnion, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '@/firebase/firebase';
+import PointsArea from '@/components/PointsArea/PointsArea';
 import UserArea from '@/components/UserArea/UserArea';
 import { RoomInfo, RoomUser } from '@/core/types';
 
@@ -41,7 +43,6 @@ const updateUser = async (
   const roomUsersRef = doc(db, 'planning', roomId);
 
   // update users doc
-  // update users doc
   await updateDoc(roomUsersRef, {
     users: arrayUnion(newUser),
   });
@@ -71,6 +72,7 @@ const updateUserInStories = async (roomId: string, user: RoomUser) => {
     stories: updatedStories,
   });
 };
+
 interface RoomPageParams {
   params: {
     // add params
@@ -89,9 +91,36 @@ const RoomPage: FC<RoomPageParams> = async ({ params }) => {
 
   await updateUser(roomData.users, user, params.roomId);
 
+  const currentlyEstimatingStory = roomData.stories?.find(
+    (story) => story.isEstimating,
+  );
+  // const adminUser = roomData.users.find((u) => u.isAdmin);
+
   return (
     <>
-      <UserArea />
+      {currentlyEstimatingStory && (
+        <Box hiddenFrom="sm" mb="md">
+          <PointsArea />
+        </Box>
+      )}
+      <UserArea
+        roomId={params.roomId}
+        currentlyEstimatingStory={currentlyEstimatingStory}
+      />
+
+      {currentlyEstimatingStory && (
+        <>
+          <Box
+            visibleFrom="sm"
+            pos="fixed"
+            bottom={10}
+            left="calc(50% + 150px)"
+            style={{ transform: 'translateX(-50%)' }}
+          >
+            <PointsArea />
+          </Box>
+        </>
+      )}
     </>
   );
 };
