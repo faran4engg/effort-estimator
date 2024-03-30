@@ -29,9 +29,30 @@ const UserCard: FC<{
       </Text>
 
       <Flex justify="center" mt="lg">
-        <Text c="dimmed" size="sm">
-          Ready to Estimate 🤞
-        </Text>
+        {currentlyEstimatingStory?.isEstimating &&
+          !context.revealResults &&
+          userPoints?.point !== 'NA' && (
+            <Text c="dimmed" size="lg">
+              ...has estimated ✅
+            </Text>
+          )}
+        {currentlyEstimatingStory?.isEstimating && context.revealResults && (
+          <Text c="dimmed" size="lg">
+            Result Time 🙈
+          </Text>
+        )}
+        {currentlyEstimatingStory?.isEstimating &&
+          !context.revealResults &&
+          userPoints?.point === 'NA' && (
+            <Text c="dimmed" size="lg">
+              ...is thinking 😵‍💫
+            </Text>
+          )}
+        {!currentlyEstimatingStory?.isEstimating && (
+          <Text c="dimmed" size="lg">
+            ...is ready 💪
+          </Text>
+        )}
       </Flex>
     </Card>
   );

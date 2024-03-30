@@ -53,7 +53,12 @@ const StoryCard: FC<Props> = ({
         </Button>
 
         <Button
-          color={isEstimating ? 'green' : 'cyan'}
+          c="#fff"
+          bg={
+            isEstimating
+              ? 'var(--mantine-primary-color-5)'
+              : 'var(--mantine-primary-color-4)'
+          }
           radius="md"
           size="xs"
           onClick={() =>
