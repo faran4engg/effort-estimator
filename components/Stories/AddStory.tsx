@@ -19,6 +19,7 @@ import { StoryProps } from '@/core/types';
 import { useAppContext } from '@/lib/context/AppContext';
 import { getUUID } from '@/utils/getUUID';
 import { sleep } from '@/utils/sleep';
+import classes from './add-story.module.css';
 
 interface Props {
   roomId: string;
@@ -89,7 +90,9 @@ const AddStory: FC<Props> = ({ roomId, setShowAddStoryCard }) => {
         radius="md"
         my="md"
         component="form"
+        withBorder
         onSubmit={form.onSubmit(addStory)}
+        className={classes.addStoryCard}
       >
         <FocusTrap>
           <TextInput
