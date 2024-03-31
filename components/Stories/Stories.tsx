@@ -77,6 +77,10 @@ const Stories = () => {
 
   const deleteStory = async (storyToUpdate: StoryProps) => {
     setDeleteStoryId(storyToUpdate.storyId);
+    const roomUsersRef = doc(db, 'planning', context.roomInfo.roomId);
+    await updateDoc(roomUsersRef, {
+      revealResults: false,
+    });
     const { stories } = context.roomInfo;
     open();
     await sleep(2000);

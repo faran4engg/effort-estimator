@@ -66,13 +66,14 @@ const AddStory: FC<Props> = ({ roomId, setShowAddStoryCard }) => {
       ...(context.roomInfo.stories ?? []),
     ] as StoryProps[];
 
+    await sleep(2000);
     await updateDoc(doc(db, 'planning', roomId), {
       stories: updatedStories,
     });
 
-    await sleep(2000);
     toggle();
     setShowAddStoryCard(false);
+
     router.refresh();
   };
 
@@ -117,7 +118,7 @@ const AddStory: FC<Props> = ({ roomId, setShowAddStoryCard }) => {
             mt="sm"
             radius="md"
             variant="filled"
-            bg="var(--mantine-primary-color-7)"
+            bg="var(--mantine-primary-color-5)"
             size="xs"
             type="submit"
           >

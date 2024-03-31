@@ -110,7 +110,14 @@ const CreateRoomForm: FC<Props> = ({ userFirstName, userImg, userId }) => {
           />
         </Flex>
 
-        <Button size="xl" radius="md" fullWidth mt="xl" type="submit">
+        <Button
+          bg="var(--mantine-primary-color-5)"
+          size="xl"
+          radius="md"
+          fullWidth
+          mt="xl"
+          type="submit"
+        >
           Create
         </Button>
       </Paper>

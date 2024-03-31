@@ -19,7 +19,7 @@ const GetStarted = async () => {
           </Box>
           <CreateRoomButton />
         </Flex>
-        <Text my="lg" size="lg" ta="center">
+        <Text my="lg" size="lg" ta="center" fz="h3">
           Create a room and share the room link with your team !
         </Text>
       </div>
@@ -37,7 +37,7 @@ const GetStarted = async () => {
             <Image src="/man.svg" fill alt="Man" />
           </Box>
         </Flex>
-        <Text my="lg" size="md" ta="center" c="dimmed">
+        <Text my="lg" size="md" ta="center" c="dimmed" fz="h3">
           {user?.firstName ? `Hey ${user?.firstName} 👋, ` : ''}Please consider
           asking your meeting facilitator to share a room link 🔗 to join
           estimation session!

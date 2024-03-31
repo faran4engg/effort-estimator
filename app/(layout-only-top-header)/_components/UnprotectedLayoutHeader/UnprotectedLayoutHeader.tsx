@@ -56,6 +56,8 @@ const UnprotectedLayoutHeader = () => {
                 radius="md"
                 onClick={() => router.push('/sign-in')}
                 tt="capitalize"
+                size="md"
+                bg="var(--mantine-primary-color-5)"
               >
                 Signin
               </Button>
@@ -103,7 +105,9 @@ const UnprotectedLayoutHeader = () => {
       >
         <ScrollArea h={`calc(100vh - ${rem(80)})`} mx="-md">
           <Divider />
-
+          <Text ta="center" fz="h1" mt="sm">
+            Welcome
+          </Text>
           <Group>
             <Stack p="md" gap="lg" w="100%" justify="center" align="center">
               {!user ? (
@@ -111,11 +115,26 @@ const UnprotectedLayoutHeader = () => {
                   radius="md"
                   onClick={() => router.push('/sign-in')}
                   tt="capitalize"
+                  size="md"
+                  fullWidth
+                  bg="var(--mantine-primary-color-5)"
                 >
                   Signin
                 </Button>
               ) : (
-                <p>Join Room</p>
+                <Text ta="center" fz="h1" mt="sm">
+                  Please{' '}
+                  <Link
+                    href="/get-started"
+                    style={{
+                      textDecoration: 'none',
+                      color: 'var(--mantine-primary-color-5)',
+                    }}
+                  >
+                    join room{' '}
+                  </Link>
+                  to participate
+                </Text>
               )}
             </Stack>
           </Group>

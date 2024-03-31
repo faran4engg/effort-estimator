@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { notFound, redirect } from 'next/navigation';
-import { Box } from '@mantine/core';
+import { Box, Card, Flex, Text } from '@mantine/core';
 import { currentUser } from '@clerk/nextjs';
 import { User } from '@clerk/nextjs/dist/types/server';
 import { arrayUnion, doc, getDoc, updateDoc } from 'firebase/firestore';
@@ -103,6 +103,19 @@ const RoomPage: FC<RoomPageParams> = async ({ params }) => {
 
   return (
     <>
+      <Flex justify="center" align="center">
+        <Card
+          p="sm"
+          radius="md"
+          shadow="xl"
+          mb="md"
+          bg="var(--mantine-primary-color-7)"
+        >
+          <Text ta="center" size="xl" fw="bold">
+            Room Name 👉 {roomData.roomName}
+          </Text>
+        </Card>
+      </Flex>
       {currentlyEstimatingStory && (
         <Box hiddenFrom="sm" mb="md">
           <PointsArea roomId={params.roomId as string} />
