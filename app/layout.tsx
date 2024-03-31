@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 import '@mantine/core/styles.css';
 import { ClerkProvider } from '@clerk/nextjs';
+import GoogleAnalytics from '@/components/analytics/GoogleAnalytics/GoogleAnalytics';
 import { spaceGroteskFont } from '@/core/fonts';
 import { theme } from '@/theme/theme';
 import '@/styles/global.css';
@@ -78,6 +79,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         </head>
 
         <body className={spaceGroteskFont.className}>
+          <GoogleAnalytics />
           <MantineProvider theme={theme} defaultColorScheme="light">
             {children}
           </MantineProvider>

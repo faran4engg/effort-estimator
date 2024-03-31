@@ -1,7 +1,3 @@
-// https://firebase.google.com/docs/web/setup#available-libraries
-// Import the functions you need from the SDKs you need
-// import { getAnalytics } from 'firebase/analytics';
-import { getAnalytics } from 'firebase/analytics';
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 
@@ -21,12 +17,5 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
-
-if (typeof window !== 'undefined') {
-  // Enable analytics. https://firebase.google.com/docs/analytics/get-started
-  if ('measurementId' in firebaseConfig) {
-    getAnalytics();
-  }
-}
 
 export { app, db };
