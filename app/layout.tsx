@@ -1,3 +1,4 @@
+import { GoogleAnalytics } from '@next/third-parties/google';
 import { ReactNode } from 'react';
 import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 import '@mantine/core/styles.css';
@@ -82,6 +83,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             {children}
           </MantineProvider>
         </body>
+        <GoogleAnalytics
+          gaId={process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID!}
+        />
       </html>
     </ClerkProvider>
   );
