@@ -6,13 +6,13 @@ import { brandPrimary, brandSecondary } from './colors';
 export const theme = createTheme({
   /* Put your mantine theme override here */
   breakpoints: {
-    xs: '36em',
-    sm: '48em',
-    md: '62em',
-    lg: '75em',
-    xl: '88em',
-    '2xl': '100em',
-    '3xl': '120em',
+    xs: '375px',
+    sm: '640px',
+    md: '768px',
+    lg: '1024px',
+    xl: '1280px',
+    '2xl': '1400px',
+    '3xl': '1600px',
   },
   colors: {
     brandPrimary,

@@ -37,10 +37,11 @@ const UserArea: FC<Props> = ({ currentlyEstimatingStory }) => {
             span={{
               base: 12,
               sm: 6,
-              md: 4,
-              xl: 3,
-              '2xl': 2.8,
-              '3xl': 2,
+              md: 6,
+              lg: 4,
+              xl: 3.6,
+              '2xl': 3,
+              '3xl': 2.4,
             }}
             key={user.userId}
           >

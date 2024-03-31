@@ -111,7 +111,7 @@ const RoomPage: FC<RoomPageParams> = async ({ params }) => {
           mb="md"
           bg="var(--mantine-primary-color-7)"
         >
-          <Text ta="center" size="xl" fw="bold">
+          <Text ta="center" size="xl" fw="bold" c="#fff">
             Room Name 👉 {roomData.roomName}
           </Text>
         </Card>
