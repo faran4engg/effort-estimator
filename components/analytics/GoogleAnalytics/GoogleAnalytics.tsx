@@ -3,10 +3,14 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
+import useIsMounted from '@/hooks/useIsMounted';
 import { GA_TRACKING_ID, pageview } from '../gtag';
 
 const GoogleAnalytics = () => {
   const { events } = useRouter();
+  const isMounted = useIsMounted();
+
+  if (!isMounted) return <>...</>;
 
   useEffect(() => {
     const handleRouteChange = (url: string) => {

@@ -1,3 +1,5 @@
+import firebase from 'firebase';
+import 'firebase/analytics';
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 
@@ -17,5 +19,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
+
+if (typeof window !== 'undefined') {
+  firebase.analytics();
+}
 
 export { app, db };
