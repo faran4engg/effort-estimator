@@ -70,7 +70,7 @@ const AddStory: FC<Props> = ({ roomId, setShowAddStoryCard }) => {
       stories: updatedStories,
     });
 
-    await sleep(1200);
+    await sleep(2000);
     toggle();
     setShowAddStoryCard(false);
     router.refresh();
