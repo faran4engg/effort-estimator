@@ -35,7 +35,7 @@ const StoryCard: FC<Props> = ({
     </Group>
 
     {canStartEstimation && (
-      <Flex justify="space-between" mt="var(--pill-fz-xs)">
+      <Flex justify="space-between" mt="sm">
         <Button
           color="red"
           radius="md"

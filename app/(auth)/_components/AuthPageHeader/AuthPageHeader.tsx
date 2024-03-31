@@ -11,9 +11,9 @@ function AuthPageHeader() {
           <Flex align="center" gap="4">
             <Image
               alt="our logo"
-              src="/mascot.svg"
-              h={35}
-              w={35}
+              src="/gauge.svg"
+              h={60}
+              w={60}
               radius="md"
               mr={4}
             />
