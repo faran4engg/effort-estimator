@@ -9,7 +9,6 @@ interface Props {
   canStartEstimation: boolean;
   startEstimation: (story: StoryProps) => Promise<void>;
   deleteStory: (story: StoryProps) => Promise<void>;
-  storyBanner: string;
 }
 const StoryCard: FC<Props> = ({
   story,
@@ -17,7 +16,6 @@ const StoryCard: FC<Props> = ({
   canStartEstimation = false,
   startEstimation,
   deleteStory,
-  storyBanner,
 }) => (
   <Card
     shadow="sm"
@@ -26,7 +24,7 @@ const StoryCard: FC<Props> = ({
     className={isEstimating ? 'animate-wiggle' : ''}
   >
     <Card.Section>
-      <Image src={storyBanner} height={60} alt="Story Card" />
+      <Image src={story.storyBanner} height={60} alt="Story Card" />
     </Card.Section>
 
     <Group justify="space-between" mt="md" grow>

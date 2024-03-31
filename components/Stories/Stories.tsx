@@ -22,6 +22,7 @@ const Stories = () => {
   const [visible, { open, close }] = useDisclosure(false);
 
   const [showAddStoryCard, setShowAddStoryCard] = useState<boolean>(false);
+  const [deleteStoryId, setDeleteStoryId] = useState<string>('');
 
   const context = useAppContext();
 
@@ -75,8 +76,9 @@ const Stories = () => {
   };
 
   const deleteStory = async (storyToUpdate: StoryProps) => {
-    open();
+    setDeleteStoryId(storyToUpdate.storyId);
     const { stories } = context.roomInfo;
+    open();
     await sleep(2000);
     const updatedStories = stories.filter(
       (story) => story.storyId !== storyToUpdate.storyId,
@@ -118,19 +120,22 @@ const Stories = () => {
         />
       )}
 
-      {context.roomInfo.stories.map((story: StoryProps, idx) => (
+      {context.roomInfo.stories.map((story: StoryProps) => (
         <div
           key={story.storyId}
           style={{ marginBottom: '1.5rem', position: 'relative' }}
         >
           <LoadingOverlay
-            visible={visible}
+            visible={visible && deleteStoryId === story.storyId}
             zIndex={1000}
-            overlayProps={{ radius: 'sm', blur: 2 }}
+            overlayProps={{
+              radius: 'sm',
+              backgroundOpacity: 0.7,
+            }}
+            loaderProps={{ color: 'pink', type: 'bars' }}
           />
           <StoryCard
             story={story}
-            storyBanner={`/banners/${idx % 6}.webp`}
             startEstimation={startEstimation}
             deleteStory={deleteStory}
             isEstimating={story.isEstimating}

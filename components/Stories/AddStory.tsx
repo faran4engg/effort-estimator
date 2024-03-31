@@ -7,6 +7,7 @@ import {
   Button,
   Card,
   Flex,
+  FocusTrap,
   LoadingOverlay,
   TextInput,
 } from '@mantine/core';
@@ -44,11 +45,14 @@ const AddStory: FC<Props> = ({ roomId, setShowAddStoryCard }) => {
 
   const addStory = async (values: typeof form.values) => {
     toggle();
+    const existingStoriesCount = context.roomInfo.stories.length;
 
     const newStory: StoryProps = {
       createdAt: Date.now(),
       storyId: getUUID(),
       storyName: values.storyName,
+      // when existingStoriesCount is 0, it means the story we are adding is the first one
+      storyBanner: `/banners/${existingStoriesCount % 6}.webp`,
       isEstimating: false,
       points: context.roomInfo.users.map((user) => ({
         point: 'NA',
@@ -65,9 +69,9 @@ const AddStory: FC<Props> = ({ roomId, setShowAddStoryCard }) => {
       stories: updatedStories,
     });
 
+    await sleep(1200);
     toggle();
     setShowAddStoryCard(false);
-    await sleep(400);
     router.refresh();
   };
 
@@ -77,22 +81,24 @@ const AddStory: FC<Props> = ({ roomId, setShowAddStoryCard }) => {
         visible={visible}
         zIndex={1000}
         overlayProps={{ radius: 'sm' }}
+        loaderProps={{ color: 'pink', type: 'dots' }}
       />
       <Card
         shadow="sm"
         padding="md"
         radius="md"
-        withBorder
         my="md"
         component="form"
         onSubmit={form.onSubmit(addStory)}
       >
-        <TextInput
-          label="Ticket Number"
-          placeholder="ex. ECOA-9927"
-          withAsterisk
-          {...form.getInputProps('storyName')}
-        />
+        <FocusTrap>
+          <TextInput
+            label="Ticket Number"
+            placeholder="ex. ECOA-9927"
+            withAsterisk
+            {...form.getInputProps('storyName')}
+          />
+        </FocusTrap>
         {/* <TextInput label="Link" {...form.getInputProps('link')} mt="xs" /> */}
         <Flex justify="space-between">
           <Button
@@ -104,7 +110,14 @@ const AddStory: FC<Props> = ({ roomId, setShowAddStoryCard }) => {
           >
             Cancel
           </Button>
-          <Button mt="sm" radius="md" variant="filled" size="xs" type="submit">
+          <Button
+            mt="sm"
+            radius="md"
+            variant="filled"
+            bg="var(--mantine-primary-color-7)"
+            size="xs"
+            type="submit"
+          >
             Add
           </Button>
         </Flex>

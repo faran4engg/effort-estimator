@@ -12,6 +12,7 @@ export interface StoryProps {
   createdAt: number;
   storyId: string;
   storyName: string;
+  storyBanner: string;
   isEstimating: boolean;
   points: StoryPointRecord[];
 }
