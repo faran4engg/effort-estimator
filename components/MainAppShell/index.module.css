@@ -1,0 +1,21 @@
+.mainArea {
+  background-color: light-dark(#f1f1f1, #25282c);
+}
+
+.navbarArea {
+  border: none;
+  box-shadow: light-dark(
+    rgba(0, 0, 0, 0.15) 0px 4px 4px,
+    rgba(0, 0, 0, 0.2) 1px 2px 2px 0px
+  );
+  background-color: light-dark(#eeeeee, #191b1d);
+}
+
+.headerArea {
+  border: none;
+  box-shadow: light-dark(
+    rgba(0, 0, 0, 0.15) 0px 4px 12px,
+    rgba(0, 0, 0, 0.4) 0px 4px 2px
+  );
+  background-color: light-dark(#eeeeee, #191b1d);
+}

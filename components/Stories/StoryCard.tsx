@@ -21,16 +21,15 @@ const StoryCard: FC<Props> = ({
 }) => (
   <Card
     shadow="sm"
-    padding="lg"
+    padding="sm"
     radius="md"
-    withBorder
     className={isEstimating ? 'animate-wiggle' : ''}
   >
     <Card.Section>
-      <Image src={storyBanner} height={80} alt="Story Card" />
+      <Image src={storyBanner} height={60} alt="Story Card" />
     </Card.Section>
 
-    <Group justify="space-between" pt="lg" grow>
+    <Group justify="space-between" mt="md" grow>
       <Text tt="capitalize" ta="center" fw={500} truncate="end">
         {story.storyName}
       </Text>
@@ -38,7 +37,7 @@ const StoryCard: FC<Props> = ({
     </Group>
 
     {canStartEstimation && (
-      <Flex justify="space-between" mt="xs">
+      <Flex justify="space-between" mt="var(--pill-fz-xs)">
         <Button
           color="red"
           radius="md"
@@ -54,7 +53,7 @@ const StoryCard: FC<Props> = ({
           c="#fff"
           bg={
             isEstimating
-              ? 'var(--mantine-primary-color-5)'
+              ? 'var(--mantine-color-green-7)'
               : 'var(--mantine-primary-color-4)'
           }
           radius="md"

@@ -9,7 +9,7 @@ const HomePage = () => (
       Welcome to Effort Estimator 👋
     </Text>
     <Text ta="center" c="dimmed">
-      ❣️ The only app you need for perfect story planning ❣️
+      ❣️ The only app you need for perfect planning ❣️
     </Text>
     <GetStartedButton />
     <Center>

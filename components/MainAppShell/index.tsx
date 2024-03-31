@@ -7,6 +7,7 @@ import { useDisclosure } from '@mantine/hooks';
 import AppContextProvider from '@/lib/context/AppContextProvider';
 import Header from './Header';
 import Navbar from './Navbar';
+import classes from './index.module.css';
 
 export function MainAppShell({ children }: { children: ReactNode }) {
   const [opened, { toggle, close }] = useDisclosure();
@@ -23,13 +24,17 @@ export function MainAppShell({ children }: { children: ReactNode }) {
         }}
         padding="md"
       >
-        <AppShell.Header>
+        <AppShell.Header withBorder={false} className={classes.headerArea}>
           <Header opened={opened} toggle={toggle} />
         </AppShell.Header>
-        <AppShell.Navbar p="md">
+        <AppShell.Navbar
+          p="md"
+          withBorder={false}
+          className={classes.navbarArea}
+        >
           <Navbar opened={opened} close={close} />
         </AppShell.Navbar>
-        <AppShell.Main>{children}</AppShell.Main>
+        <AppShell.Main className={classes.mainArea}>{children}</AppShell.Main>
       </AppShell>
     </AppContextProvider>
   );

@@ -130,7 +130,7 @@ const Stories = () => {
           />
           <StoryCard
             story={story}
-            storyBanner={`/banners/${idx % 6}.jpg`}
+            storyBanner={`/banners/${idx % 6}.webp`}
             startEstimation={startEstimation}
             deleteStory={deleteStory}
             isEstimating={story.isEstimating}
