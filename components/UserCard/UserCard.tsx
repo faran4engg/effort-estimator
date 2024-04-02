@@ -31,7 +31,17 @@ const UserCard: FC<{
           style={{ boxShadow: 'rgb(0 0 0 / 30%) 4px 4px 10px 0px' }}
         />
       )}
-      <Text ta="center" fz="lg" mt="lg">
+      <Text
+        ta="center"
+        fz="lg"
+        mt="lg"
+        tt="capitalize"
+        style={{
+          textOverflow: 'ellipsis',
+          overflow: 'hidden',
+          whiteSpace: 'nowrap',
+        }}
+      >
         {user.userName}
       </Text>
 

@@ -34,7 +34,6 @@ const StoryCard: FC<Props> = ({
       <Text tt="capitalize" ta="center" fw={500} truncate="end">
         {story.storyName}
       </Text>
-      {/* <Badge color="pink">On Sale</Badge> */}
     </Group>
 
     {canStartEstimation && (
