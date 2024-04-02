@@ -46,7 +46,7 @@ const AppContextProvider = ({
       const updatedRoomInfo = updatedDoc.data() as RoomInfo;
       updateRoomInfo({ ...updatedRoomInfo });
 
-      const estimatingStory = updatedRoomInfo.stories.find(
+      const estimatingStory = updatedRoomInfo?.stories?.find(
         (s) => !!s.isEstimating,
       );
 
