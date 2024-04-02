@@ -95,6 +95,28 @@ const Stories = () => {
     router.refresh();
   };
 
+  const updateStoryPoints = async (storyToUpdate: StoryProps) => {
+    const { storyId } = storyToUpdate;
+
+    const { stories } = context.roomInfo;
+
+    const index = (stories as StoryProps[]).findIndex(
+      (storyItem) => storyItem.storyId === storyId,
+    );
+
+    stories.splice(index, 1, storyToUpdate);
+
+    await updateDoc(doc(db, 'planning', roomId as string), {
+      stories,
+    });
+    const roomUsersRef = doc(db, 'planning', context.roomInfo.roomId);
+    await updateDoc(roomUsersRef, {
+      revealResults: false,
+    });
+
+    router.refresh();
+  };
+
   return (
     <>
       {isAdmin && (
@@ -142,6 +164,7 @@ const Stories = () => {
             story={story}
             startEstimation={startEstimation}
             deleteStory={deleteStory}
+            updateStoryPoints={updateStoryPoints}
             isEstimating={story.isEstimating}
             canStartEstimation={!!isAdmin}
           />

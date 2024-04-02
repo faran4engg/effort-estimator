@@ -91,8 +91,8 @@ const AddStory: FC<Props> = ({ roomId, setShowAddStoryCard }) => {
         radius="md"
         my="md"
         component="form"
-        withBorder
         onSubmit={form.onSubmit(addStory)}
+        withBorder
         className={classes.addStoryCard}
       >
         <FocusTrap>

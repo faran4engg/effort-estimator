@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { Trash2 } from 'lucide-react';
 import { Badge, Button, Card, Flex, Group, Image, Text } from '@mantine/core';
 import { StoryProps } from '@/core/types';
+import StoryResult from './StoryResult';
 
 interface Props {
   story: StoryProps;
@@ -9,6 +10,7 @@ interface Props {
   canStartEstimation: boolean;
   startEstimation: (story: StoryProps) => Promise<void>;
   deleteStory: (story: StoryProps) => Promise<void>;
+  updateStoryPoints: (updatedStory: StoryProps) => Promise<void>;
 }
 const StoryCard: FC<Props> = ({
   story,
@@ -16,6 +18,7 @@ const StoryCard: FC<Props> = ({
   canStartEstimation = false,
   startEstimation,
   deleteStory,
+  updateStoryPoints,
 }) => (
   <Card
     shadow="sm"
@@ -68,6 +71,12 @@ const StoryCard: FC<Props> = ({
         </Button>
       </Flex>
     )}
+
+    {isEstimating && canStartEstimation && (
+      <Flex mt="md">
+        <StoryResult story={story} updateStoryPoints={updateStoryPoints} />
+      </Flex>
+    )}
     {isEstimating && !canStartEstimation && (
       <Flex justify="center" mt="xs">
         <Badge
@@ -82,6 +91,15 @@ const StoryCard: FC<Props> = ({
         </Badge>
       </Flex>
     )}
+
+    <Flex gap="sm" mt="sm" justify="space-between">
+      <Text size="sm" c="dimmed" fw="bold">
+        Agreed Points:
+      </Text>
+      <Text fw="bold" size="sm" c="dimmed">
+        {story.agreedSP ? story.agreedSP : 'Yet to estimate'}
+      </Text>
+    </Flex>
   </Card>
 );
 export default StoryCard;

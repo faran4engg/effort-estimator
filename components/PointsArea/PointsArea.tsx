@@ -63,9 +63,9 @@ const PointsArea: FC<Props> = ({ roomId }) => {
 
     const roomRef = doc(db, 'planning', roomId);
 
-    getDoc(roomRef)
+    await getDoc(roomRef)
       // eslint-disable-next-line @typescript-eslint/no-shadow
-      .then((doc) => {
+      .then(async (doc) => {
         if (doc.exists()) {
           const data = doc.data();
 
@@ -74,7 +74,7 @@ const PointsArea: FC<Props> = ({ roomId }) => {
 
           data.stories.splice(storyToUpdateIndex, 1, storyToUpdate);
 
-          updateDoc(roomRef, {
+          await updateDoc(roomRef, {
             stories: [...data.stories],
           });
         }
