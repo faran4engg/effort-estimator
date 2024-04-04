@@ -35,7 +35,7 @@ const updateUser = async (
   const newUser: RoomUser = {
     createdAt: Date.now(),
     userId: currUser.id,
-    userName: currUser.firstName || currUser.id,
+    userName: currUser.firstName || currUser.username || currUser.id,
     // userImg from google login
     userImg: currUser.imageUrl || '/mascot.svg',
     // room creator is an Admin
