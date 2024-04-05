@@ -83,9 +83,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             {children}
           </MantineProvider>
         </body>
-        <GoogleAnalytics
-          gaId={process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID!}
-        />
+        <GoogleAnalytics gaId="G-W0BTSCF0N9" />
       </html>
     </ClerkProvider>
   );
