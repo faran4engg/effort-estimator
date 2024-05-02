@@ -13,6 +13,22 @@ interface Props {
 const UserArea: FC<Props> = ({ currentlyEstimatingStory }) => {
   const context = useAppContext();
 
+  const points = currentlyEstimatingStory?.points.map((point) => point.point);
+
+  const isBingo = points?.every((point) => point === points[0]);
+  const sortedPoints = points
+    ?.sort()
+    .filter((item, pos, arr) => !pos || item !== arr[pos - 1]);
+  const almostThere = !isBingo && sortedPoints?.length === 2;
+  const isSequence =
+    !isBingo &&
+    !almostThere &&
+    sortedPoints?.every(
+      (point, index) =>
+        index === sortedPoints.length - 1 ||
+        +point + 1 === +sortedPoints[index + 1],
+    );
+
   if (!context?.roomInfo?.users?.length) return <p>Loading...</p>;
 
   const { users } = context.roomInfo;
@@ -25,6 +41,29 @@ const UserArea: FC<Props> = ({ currentlyEstimatingStory }) => {
           </Box>
         </Center>
       )}
+
+      <Center>
+        {context?.revealResults && !!isBingo && (
+          <Text fz={"4rem"} fw={600} c="green">
+            !!! BINGO !!!
+          </Text>
+        )}
+        {context?.revealResults && !!isSequence && (
+          <Text fz={"4rem"} fw={600} c="orange">
+            Sequence...
+          </Text>
+        )}
+        {context?.revealResults && !!almostThere && (
+          <Text fz={"4rem"} fw={600} c="grape">
+            Almost there.
+          </Text>
+        )}
+        {context?.revealResults && !almostThere && !isSequence && !isBingo && (
+          <Text fz={"4rem"} fw={600} c="cyan">
+            Intresting, Lets Discuss!
+          </Text>
+        )}
+      </Center>
 
       <Grid
         // below config was for `SimpleGrid`
