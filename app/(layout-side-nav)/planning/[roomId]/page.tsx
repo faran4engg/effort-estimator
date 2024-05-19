@@ -6,12 +6,11 @@ import { User } from '@clerk/nextjs/dist/types/server';
 import { arrayUnion, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '@/firebase/firebase';
 import AdminControlArea from '@/components/AdminControlArea/AdminControlArea';
+import HelpDrawer from '@/components/HelpDrawer/HelpDrawer';
 import InfoMsgBox from '@/components/InfoMsg';
 import PointsArea from '@/components/PointsArea/PointsArea';
 import UserArea from '@/components/UserArea/UserArea';
 import { RoomInfo, RoomUser } from '@/core/types';
-import { useDisclosure } from '@mantine/hooks';
-import HelpDrawer from '@/components/HelpDrawer/HelpDrawer';
 
 const getRoomData = async (roomId: string) => {
   const docRef = doc(db, 'planning', roomId);
@@ -130,7 +129,10 @@ const RoomPage: FC<RoomPageParams> = async ({ params }) => {
       )}
 
       <UserArea currentlyEstimatingStory={currentlyEstimatingStory} />
-      <HelpDrawer currentlyEstimatingStory={currentlyEstimatingStory?.storyId}></HelpDrawer>
+      <HelpDrawer
+        currentlyEstimatingStory={currentlyEstimatingStory?.storyId}
+      >
+      </HelpDrawer>
 
       {!hasStories && (
         <Box
