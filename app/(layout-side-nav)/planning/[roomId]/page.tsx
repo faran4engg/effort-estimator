@@ -6,6 +6,7 @@ import { User } from '@clerk/nextjs/dist/types/server';
 import { arrayUnion, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '@/firebase/firebase';
 import AdminControlArea from '@/components/AdminControlArea/AdminControlArea';
+import HelpDrawer from '@/components/HelpDrawer/HelpDrawer';
 import InfoMsgBox from '@/components/InfoMsg';
 import PointsArea from '@/components/PointsArea/PointsArea';
 import UserArea from '@/components/UserArea/UserArea';
@@ -128,6 +129,10 @@ const RoomPage: FC<RoomPageParams> = async ({ params }) => {
       )}
 
       <UserArea currentlyEstimatingStory={currentlyEstimatingStory} />
+      <HelpDrawer
+        currentlyEstimatingStory={currentlyEstimatingStory?.storyId}
+      >
+      </HelpDrawer>
 
       {!hasStories && (
         <Box

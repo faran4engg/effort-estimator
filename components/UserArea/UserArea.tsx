@@ -44,22 +44,22 @@ const UserArea: FC<Props> = ({ currentlyEstimatingStory }) => {
 
       <Center>
         {context?.revealResults && !!isBingo && (
-          <Text fz={"4rem"} fw={600} c="green">
+          <Text fz="4rem" fw={600} c="green">
             !!! BINGO !!!
           </Text>
         )}
         {context?.revealResults && !!isSequence && (
-          <Text fz={"4rem"} fw={600} c="orange">
+          <Text fz="4rem" fw={600} c="orange">
             Sequence...
           </Text>
         )}
         {context?.revealResults && !!almostThere && (
-          <Text fz={"4rem"} fw={600} c="grape">
+          <Text fz="4rem" fw={600} c="grape">
             Almost there.
           </Text>
         )}
         {context?.revealResults && !almostThere && !isSequence && !isBingo && (
-          <Text fz={"4rem"} fw={600} c="cyan">
+          <Text fz="4rem" fw={600} c="cyan">
             Intresting, Lets Discuss!
           </Text>
         )}
